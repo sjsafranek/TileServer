@@ -18,7 +18,7 @@
 		<script>
 			var map = L.map('map',{maxZoom:20}).setView([35.10418,-106.62987], 12); 
 			//var tiles = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
-			var mbTiles = new L.tileLayer('http://localhost:8888/tatra/{z}/{x}/{y}', {
+			var mbTiles = new L.tileLayer('http://localhost:8888/osm_slice/{z}/{x}/{y}', {
 				tms: true,
 				attribution: 'Tiles Courtesy of <a href="http://twitter.com/pcrickard" target="_blank">Paul Crickard</a>',
 				opacity: 0.7
