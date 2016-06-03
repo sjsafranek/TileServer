@@ -16,7 +16,7 @@ func Tiles(w http.ResponseWriter, r *http.Request) {
 	z := vars["z"]
 	x := vars["x"]
 	y := vars["y"]
-	db, _ := sql.Open("sqlite3", "./" + dbname + ".mbtiles")
+	db, _ := sql.Open("sqlite3", "./"+dbname+".mbtiles")
 	rows, _ := db.Query("SELECT * FROM tiles WHERE zoom_level = ? AND tile_column = ? AND tile_row = ?", z, x, y)
 
 	for rows.Next() {
