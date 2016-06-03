@@ -21,6 +21,14 @@ var routes = Routes{
 	},
 
 	Route{
+		"MetaData",
+		"GET",
+		"/metadata/{db}",
+		MetaDataHandler,
+	},
+
+
+	Route{
 		"Map",
 		"GET",
 		"/map/{db}",
