@@ -19,4 +19,12 @@ var routes = Routes{
 		"/{db}/{z}/{x}/{y}",
 		Tiles,
 	},
+
+	Route{
+		"Map",
+		"GET",
+		"/map/{db}",
+		MapHandler,
+	},
+
 }

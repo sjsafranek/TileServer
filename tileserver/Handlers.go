@@ -32,3 +32,20 @@ func Tiles(w http.ResponseWriter, r *http.Request) {
 	db.Close()
 
 }
+
+func MapHandler(w http.ResponseWriter, r *http.Request) {
+	// Get params
+	vars := mux.Vars(r)
+	dbname := vars["db"]
+
+	type MapData struct {
+		Datasource string
+		Version    string
+	}
+
+	// Return results
+	map_tmpl := "./tmpl/map.html"
+	tmpl, _ := template.ParseFiles(map_tmpl)
+	tmpl.Execute(w, MapData{DatabaseName: dbname, Version: "1.0.0"})
+
+}
