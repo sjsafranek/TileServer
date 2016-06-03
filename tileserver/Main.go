@@ -1,13 +1,14 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"net/http"
-	"flag"
+	// "tileserver/lib"
 )
 
 var (
-	port        string
+	port string
 )
 
 func init() {
@@ -23,12 +24,11 @@ func init() {
 	flag.Parse()
 }
 
-
 func main() {
 
 	router := NewRouter()
 
-	log.Fatal(http.ListenAndServe("0.0.0.0:" + port, router))
+	log.Fatal(http.ListenAndServe("0.0.0.0:"+port, router))
 	//ListenAndServeTLS("0.0.0.0:8080", "myCertFile.pem", "myKeyFile.pem", router) error  FOR HTTPS
 
 }

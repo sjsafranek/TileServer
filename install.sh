@@ -7,6 +7,17 @@ key="$1"
 case $key in
     -i|--install)
         echo "checking requirements..."
+        
+        if [ ! -d "`pwd`/bin" ]; then
+            mkdir bin
+        fi
+
+        if [ ! -d "`pwd`/src" ]; then
+            mkdir src
+            mkdir src/tileserver
+            cp tileserver/* src/tileserver/
+        fi
+
         if [ ! -d "`pwd`/src/github.com/gorilla/mux" ]; then
             echo "installing mux..."
             go get github.com/gorilla/mux
@@ -18,12 +29,6 @@ case $key in
         fi
 
         echo "done!"
-    ;;
-    -r| --run)
-        go run *.go    
-    ;;
-    -h| --help)
-        echo "-c -t -h -r"     
     ;;
     *)
         echo "unknown option"
