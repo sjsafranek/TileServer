@@ -1,0 +1,50 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<html>
+
+	<head>
+		<title>Tilestache Test</title>
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+		<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+		<style>
+			#map {  
+				right: 0;
+				left: 0;
+				bottom: 0;
+				top: 0;
+				position: absolute !important;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div id="map"></div>
+
+		<script type="text/javascript">
+
+			var map = L.map('map', {
+				maxZoom: 25
+			}).setView([0, 0], 2);
+			var osm = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png");
+			osm.addTo(map);
+
+			// steeleTiles.setUrl("http://52.18.218.56:5555/steele3875/{z}/{x}/{y}.png");
+			// steeleTiles.addTo(map);
+
+			var tileLayers = {
+			    "psu_smsu_2":  L.tileLayer('http://localhost:5555/psu_smsu_2/{z}/{x}/{y}.png'),
+			    "psu_smsu_3":  L.tileLayer('http://localhost:5555/psu_smsu_3/{z}/{x}/{y}.png')
+			};
+
+			var vectorLayers = {};
+
+			L.control.layers(tileLayers, vectorLayers).addTo(map);
+
+		</script>
+	</body>
+</html>

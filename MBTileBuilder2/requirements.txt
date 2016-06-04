@@ -1,0 +1,4 @@
+GDAL==1.10.1
+ModestMaps==1.4.6
+Pillow==2.6.1
+TileStache==1.50.1
