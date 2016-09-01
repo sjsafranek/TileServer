@@ -11,7 +11,7 @@ var (
 )
 
 func init() {
-	flag.StringVar(&port, "p", "8888", "server [port")
+	flag.StringVar(&port, "p", "8888", "server [port]")
 	flag.Parse()
 }
 
