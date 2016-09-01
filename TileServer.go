@@ -37,7 +37,7 @@ func SimpleExample(map_file string) {
 // The created tiles are cached in an sqlite database (MBTiles 1.2 conform) so
 // successive access a tile is much faster.
 func TileserverWithCaching(map_file string) {
-	cache := "gomapnikcache.sqlite"
+	cache := "gomapnikcache.mbtiles"
 	os.Remove(cache)
 	t := maptiles.NewTileServer(cache)
 	t.AddMapnikLayer("default", map_file)
