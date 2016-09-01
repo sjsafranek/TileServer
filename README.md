@@ -45,14 +45,3 @@ The tileserver was built as a copy of the PHP version by [Bryan McBride](https:/
 
 
 
-
-
-https://github.com/fawick/go-mapnik
-
-apt-get install libmapnik-dev
-
-export GOPATH="`pwd`"
-go get -d github.com/fawick/go-mapnik/mapnik
-
-cd src/github.com/fawick/go-mapnik/mapnik/
-./configure.bash
