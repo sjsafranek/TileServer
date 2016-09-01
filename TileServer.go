@@ -13,10 +13,10 @@ import (
 )
 
 // Render a simple map of europe to a PNG file
-func SimpleExample() {
+func SimpleExample(map_file string) {
 	m := mapnik.NewMap(1600, 1200)
 	defer m.Free()
-	m.Load("sampledata/stylesheet.xml")
+	m.Load(map_file)
 	fmt.Println(m.SRS())
 	// Perform a projection that is only neccessary because stylesheet.xml
 	// is using EPSG:3857 rather than WGS84
@@ -32,38 +32,15 @@ func SimpleExample() {
 	ioutil.WriteFile("mapnik.png", blob, 0644)
 }
 
-// This function resembles the OSM python script 'generate_tiles.py'
-// The original script is found here:
-// http://svn.openstreetmap.org/applications/rendering/mapnik/generate_tiles.py
-func GenerateOSMTiles() {
-	g := maptiles.Generator{}
-
-	// Modify this number according to your machine!
-	g.Threads = 4
-
-	home := os.Getenv("HOME")
-	g.MapFile = os.Getenv("MAPNIK_MAP_FILE")
-	if g.MapFile == "" {
-		g.MapFile = home + "/svn.openstreetmap.org/applications/rendering/mapnik/osm-local.xml"
-	}
-	g.TileDir = os.Getenv("MAPNIK_TILE_DIR")
-	if g.TileDir == "" {
-		g.TileDir = home + "/osm/tiles"
-	}
-
-	g.Run(mapnik.Coord{-180, -90}, mapnik.Coord{180, 90}, 0, 6, "World")
-	g.Run(mapnik.Coord{0, 35.0}, mapnik.Coord{16, 70}, 1, 11, "Europe")
-}
-
 // Serve a single stylesheet via HTTP. Open view_tileserver.html in your browser
 // to see the results.
 // The created tiles are cached in an sqlite database (MBTiles 1.2 conform) so
 // successive access a tile is much faster.
-func TileserverWithCaching() {
+func TileserverWithCaching(map_file string) {
 	cache := "gomapnikcache.sqlite"
 	os.Remove(cache)
 	t := maptiles.NewTileServer(cache)
-	t.AddMapnikLayer("default", "sampledata/stylesheet.xml")
+	t.AddMapnikLayer("default", map_file)
 	http.ListenAndServe(":8080", t)
 }
 
@@ -72,5 +49,22 @@ func TileserverWithCaching() {
 func main() {
 	// SimpleExample()
 	//GenerateOSMTiles()
-	TileserverWithCaching()
+	TileserverWithCaching("sampledata/stylesheet.xml")
 }
+
+
+/*
+
+https://github.com/sjsafranek/go-mapnik
+
+apt-get install libmapnik-dev
+
+export GOPATH="`pwd`"
+go get -d github.com/sjsafranek/go-mapnik/mapnik
+
+cd src/github.com/sjsafranek/go-mapnik/mapnik/
+./configure.bash
+cd ../../../../..
+
+
+*/
