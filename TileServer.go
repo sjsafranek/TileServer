@@ -6,11 +6,13 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
+	// "os"
 
 	"github.com/sjsafranek/go-mapnik/mapnik"
 	"github.com/sjsafranek/go-mapnik/maptiles"
 )
+
+var config map[string]string
 
 // Render a simple map of europe to a PNG file
 func SimpleExample(map_file string) {
@@ -36,11 +38,15 @@ func SimpleExample(map_file string) {
 // to see the results.
 // The created tiles are cached in an sqlite database (MBTiles 1.2 conform) so
 // successive access a tile is much faster.
-func TileserverWithCaching(map_file string) {
+func TileserverWithCaching(layer_config map[string]string) {
 	cache := "gomapnikcache.mbtiles"
-	os.Remove(cache)
+	// os.Remove(cache)
 	t := maptiles.NewTileServer(cache)
-	t.AddMapnikLayer("default", map_file)
+	for i := range layer_config {
+		t.AddMapnikLayer(i, layer_config[i])
+	}
+	// t.AddMapnikLayer("default", map_file)
+	// CONFIG FILE
 	http.ListenAndServe(":8080", t)
 }
 
@@ -49,12 +55,26 @@ func TileserverWithCaching(map_file string) {
 func main() {
 	// SimpleExample()
 	//GenerateOSMTiles()
-	TileserverWithCaching("sampledata/stylesheet.xml")
+	config = make(map[string]string)
+	config["default"] = "sampledata/stylesheet.xml"
+	config["sample"] = "sampledata/stylesheet.xml"
+	TileserverWithCaching(config)
 }
+
+/*
+
+{
+	"default": "sampledata/stylesheet.xml",
+	"sample": "sampledata/stylesheet.xml"
+}
+
+*/
+
 
 
 /*
 
+https://github.com/mapbox/mbtiles-spec/blob/master/1.2/spec.md
 https://github.com/sjsafranek/go-mapnik
 
 apt-get install libmapnik-dev
@@ -65,6 +85,8 @@ go get -d github.com/sjsafranek/go-mapnik/mapnik
 cd src/github.com/sjsafranek/go-mapnik/mapnik/
 ./configure.bash
 cd ../../../../..
+go run TileServer.go
 
 
 */
+
